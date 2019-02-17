@@ -1,3 +1,6 @@
+#ifndef FNC_HPP
+#define FNC_HPP
+
 class Fnc{
 	Fnc *par, **ths;
 	virtual void _show(Fnc *) = 0;
@@ -10,18 +13,19 @@ public:
 	Fnc *insert_left(), *insert_right();
 	Fnc *com(char), *app(char, char);
 	void show(Fnc *);
+	virtual ~Fnc() {}
 };
 
-class Com : public Fnc{
+class Com final : public Fnc{
 	const char text;
 	void _show(Fnc *);
 	~Com();
 public:
 	Com(Fnc *, Fnc **, char);
-	Fnc *child_left(), *child_right();
+	virtual Fnc *child_left(), *child_right() override final;
 };
 
-class App : public Fnc{
+class App final : public Fnc{
 	Fnc *lft, *rgt;
 	void _show(Fnc *);
 	~App();
@@ -31,3 +35,5 @@ class App : public Fnc{
 public:
 	Fnc *child_left(), *child_right();
 };
+
+#endif
