@@ -15,10 +15,30 @@ App::~App(){
 Fnc *Fnc::parent(){ return par ? par : this; }
 Fnc *Fnc::brother_left(){ return par ? par->child_left() : this; }
 Fnc *Fnc::brother_right(){ return par ? par->child_right() : this; }
+Fnc *Fnc::insert_left(){
+	App *tmp = new App(par, ths, 0, 'i');
+	*ths = tmp;
+	par = tmp;
+	tmp->lft = this;
+	ths = &tmp->lft;
+	return tmp;
+}
+Fnc *Fnc::insert_right(){
+	App *tmp = new App(par, ths, 'i', 0);
+	*ths = tmp;
+	par = tmp;
+	tmp->rgt = this;
+	ths = &tmp->rgt;
+	return tmp;
+}
 Fnc *Com::child_left(){ return this; }
 Fnc *App::child_left(){ return lft; }
 Fnc *Com::child_right(){ return this; }
 Fnc *App::child_right(){ return rgt; }
+Fnc *Com::delete_left(){ return this; }
+Fnc *App::delete_left(){ return this; }
+Fnc *Com::delete_right(){ return this; }
+Fnc *App::delete_right(){ return this; }
 
 Fnc *Fnc::com(char text){
 	*ths = new Com(par, ths, text);

@@ -14,12 +14,16 @@ enum class Command{
 	child_right,
 	brother_left,
 	brother_right,
+	insert_left,
+	insert_right,
+	delete_left,
+	delete_right,
 	parent
 };
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]){
 
-	constexpr auto list = [] {
+	auto list = []{
 		std::array<Command, 256> list{};
 		list[10] = Command::quit;
 		list['a'] = Command::app;
@@ -30,6 +34,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]){
 		list['r'] = Command::child_right;
 		list['l' & 037] = Command::brother_left;
 		list['r' & 037] = Command::brother_right;
+		list['i'] = Command::insert_left;
+		list['o'] = Command::insert_right;
 		list['p'] = Command::parent;
 		return list;
 	}();
@@ -39,7 +45,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]){
 	noecho();
 	keypad(stdscr, TRUE);
 	curs_set(0);
-
 
 	for(;;){
 		move(0, 0);
@@ -76,6 +81,18 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]){
 				break;
 			case Command::parent:
 				cur = cur->parent();
+				break;
+			case Command::insert_left:
+				cur = cur->insert_left();
+				break;
+			case Command::insert_right:
+				cur = cur->insert_right();
+				break;
+			case Command::delete_left:
+				cur = cur->delete_left();
+				break;
+			case Command::delete_right:
+				cur = cur->delete_right();
 				break;
 		}
 		erase();

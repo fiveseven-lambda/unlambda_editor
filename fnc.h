@@ -11,6 +11,7 @@ public:
 	virtual Fnc *child_left() = 0, *child_right() = 0;
 	Fnc *brother_left(), *brother_right();
 	Fnc *insert_left(), *insert_right();
+	virtual Fnc *delete_left() = 0, *delete_right() = 0;
 	Fnc *com(char), *app(char, char);
 	void show(Fnc *);
 	virtual ~Fnc() {}
@@ -22,18 +23,20 @@ class Com final : public Fnc{
 	~Com();
 public:
 	Com(Fnc *, Fnc **, char);
-	virtual Fnc *child_left(), *child_right() override final;
+	Fnc *child_left() override final, *child_right() override final;
+	Fnc *delete_left() override final, *delete_right() override final;
 };
 
 class App final : public Fnc{
 	Fnc *lft, *rgt;
 	void _show(Fnc *);
 	~App();
-	App(Fnc *, Fnc **, Fnc *, Fnc *);
-	App(Fnc *, Fnc **, char, char);
 	friend Fnc *Fnc::app(char, char);
+	friend Fnc *Fnc::insert_left(), *Fnc::insert_right();
 public:
-	Fnc *child_left(), *child_right();
+	App(Fnc *, Fnc **, char, char);
+	Fnc *child_left() override final, *child_right() override final;
+	Fnc *delete_left() override final, *delete_right() override final;
 };
 
 #endif
